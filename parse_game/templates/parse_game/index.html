@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if message %}
+    <div class="alert alert-info" role="alert">
+      {{ message }}
+    </div>
+{% endif %}
+
+
+<h1>Parse data</h1>
+<p>Click on the button:</p>
+
+<a href="{% url 'parse_site' %}" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Parse site</a>
+<a href="{% url 'download_from_db' %}" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">Download from db</a>
+<a href="{% url 'upload_db' %}" class="btn btn-danger btn-lg active" role="button" aria-pressed="true">Upload db</a>
+
+<div class="mt20">
+    {% if data_db %}
+
+        {% for data in data_db %}
+            <h2>{{ data.published }}</h2>
+            {% for item in data.content %}
+                <table class="custom-table tasks-table">
+                    <tr>
+                        <td>{{ item.name }}</td>
+                        {% for bet in item.bets %}
+                            {{ bet }}
+                        {% endfor %}
+                    </tr>
+                </table>
+            {% endfor %}
+        {% endfor %}
+    {% endif %}
+</div>
+
+{% endblock %}
+
